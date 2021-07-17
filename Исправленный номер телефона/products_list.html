@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="css/media.css">
+	<title>Rentool</title>
+	<link rel="shortcut icon" type="image/png" href="img/favicon.ico"/>
+</head>
+<body>
+	<div class="nav-main">
+		<div class="content_line">
+			<div class="nav">
+				<div class="logo">
+					<a href="index.html"><img src="img/Logo.png" alt="rentool"></a>
+				</div>
+				<div class="call_us_wrap"><span>Позвони нам </span><a class="call_us" href="tel:+7 (961) 273-93-23">7 (961) 273-93-23</a></div>
+				<div  class="write_us_wrap">
+					<span>Напиши нам<br></span>
+					<a class="email" href="email:rentoolrnd@mail.ru">rentoolrnd@mail.ru</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="categories_wrap">
+		<div class="content_line">
+			<!-- <div class="search">ПОИСК</div> -->
+			<div class="category-navigation">
+				<a href="index.html#categories" class="category_home">Главная</a>
+				<span>&gt;</span>
+				<a href="" class="category_name"></a>
+				<span>&gt;</span>
+				<span class="subcategory_name"></span>
+			</div>
+			<h1 class="category_name_heading"></h1>
+			<div class="categories">
+				<!-- <div class="product">
+					<a class="a_image" href="#">
+						<div class="image_link" style="background-image:url(img/444.png)"></div>
+					</a>
+					<h2 class="product_name">Шуруповерт “Айвак 25” А2р432</h2>
+					<div class="product_bottom">
+						<div class="price">
+							<span class="price_1">1000₽</span>
+							<span class="price_2">/ сутки</span>
+						</div>
+						<a class="a_link" href="#">Открыть</a>
+					</div>
+				</div> -->
+			</div>
+		</div>
+	</div>
+	<div class="footer">
+		<div class="content_line">
+			<div class="footer_list">
+				<div class="footer_item footer_item_flex">
+					<img src="img/logo2.png" alt="">
+					<a class="yellow_phone" href="tel:+7 (961) 273-93-23">7 (961) 273-93-23</a>
+					<a class="email" href="email:rentoolrnd@mail.ru">rentoolrnd@mail.ru</a>
+					<button href="#" class="get_instrument" id="order_call">Заказать звонок</button>
+				</div>
+				<!-- <div class="footer_item">
+					<a href="#" class="footer_category">Электроинструменты:</a>
+					<ul>
+						<li><a href="#" class="footer_subcategory">- Отбойный молоток</a></li>
+					</ul>
+				</div> -->
+			</div>
+			<div class="footer_bottom_list">
+				<div class="footer_item footer_item_docs">
+					<a href="law/processing_of_personal_data.html">Пользовательское соглашение</a>
+				</div>
+				<div class="footer_item footer_item_docs">
+					<a href="law/consent_to_the_processing_of_personal_data.html">Соглашение на обработку данных</a>
+				</div>
+				<div class="footer_item footer_item_docs footer_item_docs_last">
+					<p>“Rentool” 2021 / © Все права защищены!</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="preloader"><!-- Элементы прелоадера --></div>
+	<div class="modal_order_call">
+		<form class="modal_rent_product" action="handler.php">
+			<div id="buttonxphone">x</div>
+			<h2>Заказать обратный звонок</h2>
+			<input class="phone_input" type="text" name="phone" placeholder="Телефон (79612739323)">
+			<input class="dispnone request_type" type="text" name="request_type" value="phone_request">
+			<input class="phone_submit" type="submit" value="Отправить номер">
+			<p>Нажимая кнопку "Отправить номер" подтверждаю, что я ознкомился c <a href="law/processing_of_personal_data.html">Положением об обработке персональных данных</a>, и подтверждает согласие с документом <a href="law/consent_to_the_processing_of_personal_data.html">Согласия на обработку персональных данных</a>.</p>
+		</form>
+	</div>
+	<script src="js/jquery.js"></script>
+	<script type="text/javascript" src="js/main.js"></script>
+	<script>
+
+		let relativeId = 0;
+		let subcategoryId = location.hash.substring(1);
+		$.get(`${api_url}/category/${subcategoryId}`, function(data) {
+			relativeId = data.rootCategory;
+			document.querySelector('.category_name_heading').innerHTML=data.name;
+			document.querySelector('.subcategory_name').innerHTML=data.name;
+			data.goods.forEach((item)=>{
+				var product=document.createElement('div');
+				product.className='product';
+				// next //
+				var a_image=document.createElement('a');
+				a_image.className='a_image';
+				a_image.href=`product.html#${item.id}`;
+				// next //
+				var image_link=document.createElement('div');
+				image_link.className='image_link';
+				var length=item.photos.length;
+				if(length>0){
+					image_link.style.backgroundImage =`url('${api_url}/uploads/${item.photos[0].url}')`;
+				}else{
+					image_link.style.backgroundImage =`url('img/tool.jpg')`;
+				}
+				// next //
+				var h2=document.createElement('h2');
+				h2.className='product_name';
+				h2.innerHTML=item.name;
+				// next //
+				var product_bottom=document.createElement('div');
+				product_bottom.className='product_bottom';
+				// next //
+				var price=document.createElement('div');
+				price.className='price';
+				// next //
+					var price_1=document.createElement('span');
+					price_1.className='price_1';
+					// price_1.innerHTML="Цена ";
+					// next //
+					var price_2=document.createElement('span');
+					price_2.className='price_2';
+					price_2.innerHTML="/ сутки";
+					//next//
+					length=item.prices.length;
+					if(length>0){
+						price_1.innerHTML=`${item.prices[0].price}₽ `;
+					}else{
+						price_1.innerHTML="1000₽ ";
+					}
+				// next //
+				var a_link=document.createElement('a');
+				a_link.className='a_link';
+				a_link.href=`product.html#${item.id}`;
+				a_link.innerHTML="Открыть";
+				// APPENDCHILD //
+				document.querySelector('.categories').appendChild(product);
+				product.appendChild(a_image);
+				a_image.appendChild(image_link);
+				product.appendChild(h2);
+				product.appendChild(product_bottom);
+				product_bottom.appendChild(price); 
+				price.appendChild(price_1); 
+				price.appendChild(price_2);
+				product_bottom.appendChild(a_link); 
+			})
+		});
+		$.get(`${api_url}/categories`, function(data) {
+			let prod_category=data.find(item => item.id == relativeId);
+			console.log(prod_category);
+			document.querySelector('.category_name').innerHTML=prod_category.name;
+			document.querySelector('.category_name').href=`subcategory.html#${prod_category.id}`;
+			console.log(prod_category);
+			let categories = data.filter(item => item.rootCategory==null);
+			categories.forEach((item)=>{
+				var footer_item=document.createElement('div');
+				footer_item.className='footer_item';
+				document.querySelector('.footer_list').appendChild(footer_item);
+				//next
+				var footer_category=document.createElement('a');
+		 		footer_category.className='footer_category';
+	 			footer_category.href=`subcategory.html#${item.id}`;
+	 			footer_category.innerHTML=item.name;
+	 			footer_item.appendChild(footer_category);
+	 			// next
+	 			var footer_ul=document.createElement('ul');
+	 			footer_item.appendChild(footer_ul);
+	 			// next
+	 				let subcategories=data.filter(item2 => item2.rootCategory!=null);
+	 				subcategories = subcategories.filter(item2 => item2.rootCategory.id==item.id)
+	 				subcategories.forEach((subitem)=>{
+	 					var subcategory_li=document.createElement('li');
+		 				var footer_subcategory=document.createElement('a');
+			 			footer_subcategory.className='footer_subcategory';
+			 			footer_subcategory.href=`products_list.html#${subitem.id}`;
+			 			footer_subcategory.innerHTML=`- ${subitem.name}`;
+			 			footer_ul.appendChild(subcategory_li);
+			 			subcategory_li.appendChild(footer_subcategory);
+	 				})
+			});
+		});
+		window.addEventListener('hashchange', function(e) {
+			window.location.reload()
+		});
+	</script>
+</body>
+</html>

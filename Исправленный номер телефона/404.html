@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/media.css">
+    <title>Rentool!404</title>
+    <link rel="shortcut icon" type="image/png" href="img/favicon.ico"/>
+</head>
+<body>
+    <div class="nav-main">
+        <div class="content_line">
+            <div class="nav">
+                <div class="logo">
+                    <a href="index.html"><img src="img/Logo.png" alt="rentool"></a>
+                </div>
+                <div class="call_us_wrap"><span>Позвони нам </span><a class="call_us" href="tel:+7 (961) 273-93-23">7 (961) 273-93-23</a></div>
+                <div  class="write_us_wrap">
+                    <span>Напиши нам<br></span>
+                    <a class="email" href="email:rentoolrnd@mail.ru">rentoolrnd@mail.ru</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="content_line thanks_block">
+        <h1>404</h1>
+        <p>К сожалению мы не нашли данную страницу</p>
+        <img src="img/cat_request.png" alt="">
+        <a href="index.html" class="yellow_button">Вернуться на главную</a>
+    </div>
+    <div class="footer">
+        <div class="content_line">
+            <div class="footer_list">
+                <div class="footer_item footer_item_flex">
+                    <img src="img/logo2.png" alt="">
+                    <a class="yellow_phone" href="tel:+7 (961) 273-93-23">7 (961) 273-93-23</a>
+                    <a class="email" href="email:rentoolrnd@mail.ru">rentoolrnd@mail.ru</a>
+                    <button href="#" class="get_instrument" id="order_call">Заказать звонок</button>
+                </div>
+                <!-- <div class="footer_item">
+                    <a href="#" class="footer_category">Электроинструменты:</a>
+                    <ul>
+                        <li><a href="#" class="footer_subcategory">- Отбойный молоток</a></li>
+                    </ul>
+                </div> -->
+            </div>
+            <div class="footer_bottom_list">
+                <div class="footer_item footer_item_docs">
+                    <a href="law/processing_of_personal_data.html">Пользовательское соглашение</a>
+                </div>
+                <div class="footer_item footer_item_docs">
+                    <a href="law/consent_to_the_processing_of_personal_data.html">Соглашение на обработку данных</a>
+                </div>
+                <div class="footer_item footer_item_docs footer_item_docs_last">
+                    <p>“Rentool” 2021 / © Все права защищены!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal_order_call">
+        <form class="modal_rent_product" action="handler.php">
+            <div id="buttonxphone">x</div>
+            <h2>Заказать обратный звонок</h2>
+            <input class="phone_input" type="text" name="phone" placeholder="Телефон (79612739323)">
+            <input class="dispnone request_type" type="text" name="request_type" value="phone_request">
+            <input class="phone_submit" type="submit" value="Отправить номер">
+            <p>Нажимая кнопку "Отправить номер" подтверждаю, что я ознкомился c <a href="law/processing_of_personal_data.html">Положением об обработке персональных данных</a>, и подтверждает согласие с документом <a href="law/consent_to_the_processing_of_personal_data.html">Согласия на обработку персональных данных</a>.</p>
+        </form>
+    </div>
+    <script src="js/jquery.js"></script>
+    <script type="text/javascript" src="js/main.js"></script>
+    <script>
+        let data = JSON.parse(localStorage.getItem('categories'));
+        if(data==null){
+            $.get(`${api_url}/categories`, function(saved_data) {
+                console.log(saved_data);
+                localStorage.setItem('categories', JSON.stringify(saved_data));
+                data=saved_data;
+            });
+        }
+        let categories = data.filter(item => item.rootCategory==null);
+        categories.forEach((item)=>{
+            var footer_item=document.createElement('div');
+            footer_item.className='footer_item';
+            document.querySelector('.footer_list').appendChild(footer_item);
+            //next
+            var footer_category=document.createElement('a');
+                footer_category.className='footer_category';
+                footer_category.href=`subcategory.html#${item.id}`;
+                footer_category.innerHTML=item.name;
+                footer_item.appendChild(footer_category);
+                // next
+                var footer_ul=document.createElement('ul');
+                footer_item.appendChild(footer_ul);
+                // next
+                    let subcategories=data.filter(item2 => item2.rootCategory!=null);
+                    subcategories = subcategories.filter(item2 => item2.rootCategory.id==item.id)
+                    subcategories.forEach((subitem)=>{
+                        var subcategory_li=document.createElement('li');
+                        var footer_subcategory=document.createElement('a');
+                    footer_subcategory.className='footer_subcategory';
+                    footer_subcategory.href=`products_list.html#${subitem.id}`;
+                    footer_subcategory.innerHTML=`- ${subitem.name}`;
+                    footer_ul.appendChild(subcategory_li);
+                    subcategory_li.appendChild(footer_subcategory);
+                    })
+        });
+    </script>
+</body>
+</html>
