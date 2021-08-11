@@ -375,6 +375,46 @@
 	.app_call{
 		justify-content: center;
 	}
+	.mobile_menu_item span{
+		font-size: 15px;
+	}
+	.header_search{
+		margin-bottom: 0px;
+	}
+	.nav{
+		min-height: 80px;
+	}
+	.content_line{
+		padding: 45px 0px;
+	}
+	/*Мобильное меню*/
+	.mobile_bottom_menu{
+		display: block;
+	}
+	.call_us_wrap,.bucket_wrap{
+		display: none;
+	}
+	.header_search{
+		display:flex;
+		margin-bottom: 0px;
+		margin-left: 10px;
+	}
+	.header_search .search_input{
+		padding: 16px 10px;
+		font-size: 15px;
+		border-radius: 5px	
+	}
+	.header_search .search_button{
+		border-radius: 5px;
+		margin-left: 10px;
+		font-size: 15px;
+	}
+	.content_search{
+		display: none;
+	}
+	body{
+		padding: 86px 0px 65px;
+	}
 }
 @media (max-width: 374px)
 {
